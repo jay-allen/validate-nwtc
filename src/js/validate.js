@@ -225,7 +225,7 @@
 		localSettings.beforeShowError(field, error);
 
 		// Add error class to field
-		field.classList.add(localSettings.fieldClass);
+		field.parentNode.classList.add(localSettings.fieldClass);
 
 		// If the field is a radio button and part of a group, error all and get the last item in the group
 		if (field.type === 'radio' && field.name) {
@@ -233,7 +233,7 @@
 			if (group.length > 0) {
 				for (var i = 0; i < group.length; i++) {
 					if (group[i].form !== field.form) continue; // Only check fields in current form
-					group[i].classList.add(localSettings.fieldClass);
+					group[i].parentNode.classList.add(localSettings.fieldClass);
 				}
 				field = group[group.length - 1];
 			}
