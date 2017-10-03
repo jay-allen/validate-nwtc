@@ -1,3 +1,7 @@
+## Cloned and modified from [Chris Ferdinandi's repo](https://github.com/cferdinandi/validate).
+
+<hr>
+
 # Validate.js [![Build Status](https://travis-ci.org/cferdinandi/validate.svg)](https://travis-ci.org/cferdinandi/validate)
 A lightweight form validation script that augments native HTML5 form validation elements and attributes, providing a better user experience and giving you more control.
 
