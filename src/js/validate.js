@@ -1,12 +1,40 @@
+/*!
+ * validate v1.0.5: A lightweight form validation script that augments native HTML5 form validation elements and attributes.
+ * (c) 2017 Chris Ferdinandi
+ * MIT License
+ * http://github.com/cferdinandi/validate
+ */
+
+/*!
+ * validate v1.0.5: A lightweight form validation script that augments native HTML5 form validation elements and attributes.
+ * (c) 2017 Chris Ferdinandi
+ * MIT License
+ * http://github.com/cferdinandi/validate
+ */
+
+/*!
+ * validate v1.0.5: A lightweight form validation script that augments native HTML5 form validation elements and attributes.
+ * (c) 2017 Chris Ferdinandi
+ * MIT License
+ * http://github.com/cferdinandi/validate
+ */
+
+/*!
+ * validate v1.0.5: A lightweight form validation script that augments native HTML5 form validation elements and attributes.
+ * (c) 2017 Chris Ferdinandi
+ * MIT License
+ * http://github.com/cferdinandi/validate
+ */
+
 (function (root, factory) {
-	if ( typeof define === 'function' && define.amd ) {
+	if (typeof define === 'function' && define.amd) {
 		define([], factory(root));
-	} else if ( typeof exports === 'object' ) {
+	} else if (typeof exports === 'object') {
 		module.exports = factory(root);
 	} else {
 		root.validate = factory(root);
 	}
-})(typeof global !== 'undefined' ? global : this.window || this.global, function (root) {
+})(typeof global !== 'undefined' ? global : this.window || this.global, (function (root) {
 
 	'use strict';
 
@@ -30,7 +58,7 @@
 		messageValueMissing: 'Please fill out this field.',
 		messageValueMissingSelect: 'Please select a value.',
 		messageValueMissingSelectMulti: 'Please select at least one value.',
-		messageTypeMismatchEmail: 'Please enter an email address.',
+		messageTypeMismatchEmail: 'Please enter an email address.:/',
 		messageTypeMismatchURL: 'Please enter a URL.',
 		messageTooShort: 'Please lengthen this text to {minLength} characters or more. You are currently using {length} characters.',
 		messageTooLong: 'Please shorten this text to no more than {maxLength} characters. You are currently using {length} characters.',
@@ -43,13 +71,13 @@
 
 		// Form Submission
 		disableSubmit: false,
-		onSubmit: function () {},
+		onSubmit: function () { },
 
 		// Callbacks
-		beforeShowError: function () {},
-		afterShowError: function () {},
-		beforeRemoveError: function () {},
-		afterRemoveError: function () {},
+		beforeShowError: function () { },
+		afterShowError: function () { },
+		beforeRemoveError: function () { },
+		afterRemoveError: function () { },
 
 	};
 
@@ -66,10 +94,10 @@
 			Element.prototype.msMatchesSelector ||
 			Element.prototype.oMatchesSelector ||
 			Element.prototype.webkitMatchesSelector ||
-			function(s) {
+			function (s) {
 				var matches = (this.document || this.ownerDocument).querySelectorAll(s),
 					i = matches.length;
-				while (--i >= 0 && matches.item(i) !== this) {}
+				while (--i >= 0 && matches.item(i) !== this) { }
 				return i > -1;
 			};
 	}
@@ -90,18 +118,18 @@
 		var length = arguments.length;
 
 		// Check if a deep merge
-		if ( Object.prototype.toString.call( arguments[0] ) === '[object Boolean]' ) {
+		if (Object.prototype.toString.call(arguments[0]) === '[object Boolean]') {
 			deep = arguments[0];
 			i++;
 		}
 
 		// Merge the object into the extended object
 		var merge = function (obj) {
-			for ( var prop in obj ) {
-				if ( Object.prototype.hasOwnProperty.call( obj, prop ) ) {
+			for (var prop in obj) {
+				if (Object.prototype.hasOwnProperty.call(obj, prop)) {
 					// If deep merge and property is an object, merge properties
-					if ( deep && Object.prototype.toString.call(obj[prop]) === '[object Object]' ) {
-						extended[prop] = extend( true, extended[prop], obj[prop] );
+					if (deep && Object.prototype.toString.call(obj[prop]) === '[object Object]') {
+						extended[prop] = extend(true, extended[prop], obj[prop]);
 					} else {
 						extended[prop] = obj[prop];
 					}
@@ -110,7 +138,7 @@
 		};
 
 		// Loop through each object and conduct a merge
-		for ( ; i < length; i++ ) {
+		for (; i < length; i++) {
 			var obj = arguments[i];
 			merge(obj);
 		}
@@ -126,9 +154,9 @@
 	 * @param  {String}  selector Selector to match against
 	 * @return {Boolean|Element}  Returns null if not match found
 	 */
-	var getClosest = function ( elem, selector ) {
-		for ( ; elem && elem !== document; elem = elem.parentNode ) {
-			if ( elem.matches( selector ) ) return elem;
+	var getClosest = function (elem, selector) {
+		for (; elem && elem !== document; elem = elem.parentNode) {
+			if (elem.matches(selector)) return elem;
 		}
 		return null;
 	};
@@ -151,12 +179,17 @@
 		// Get validity
 		var validity = field.validity;
 
+		// Custom MyMail Error
+		if (validity.valid && field.type == 'email') {
+			return nwtcCustomErrors(field);
+		}
+
 		// If valid, return null
 		if (validity.valid) return;
 
 		// If field is required and empty
 		if (validity.valueMissing) {
-			
+
 			if (field.type === 'select-multiple') return localSettings.messageValueMissingSelectMulti;
 
 			if (field.type === 'select-one') return localSettings.messageValueMissingSelect;
@@ -168,7 +201,7 @@
 		if (validity.typeMismatch) {
 
 			// Email
-			if (field.type === 'email') return localSettings.messageTypeMismatchEmail;
+			if (field.type === 'email') return localSettings.messageTypeMismatchEmail + ":(";
 
 			// URL
 			if (field.type === 'url') return localSettings.messageTypeMismatchURL;
@@ -245,7 +278,7 @@
 
 		// Check if error message field already exists
 		// If not, create one
-		var message = field.form.querySelector('.' + localSettings.errorClass + '#error-for-' + id );
+		var message = field.form.querySelector('.' + localSettings.errorClass + '#error-for-' + id);
 		if (!message) {
 			message = document.createElement('div');
 			message.className = localSettings.errorClass;
@@ -253,16 +286,16 @@
 
 			// If the field is a radio button or checkbox, insert error after the label
 			var label;
-			if (field.type === 'radio' || field.type ==='checkbox') {
+			if (field.type === 'radio' || field.type === 'checkbox') {
 				label = field.form.querySelector('label[for="' + id + '"]') || getClosest(field, 'label');
 				if (label) {
-					label.parentNode.insertBefore( message, label.nextSibling );
+					label.parentNode.insertBefore(message, label.nextSibling);
 				}
 			}
 
 			// Otherwise, insert it after the field
 			if (!label) {
-				field.parentNode.insertBefore( message, field.nextSibling );
+				field.parentNode.insertBefore(message, field.nextSibling);
 			}
 		}
 
@@ -299,7 +332,7 @@
 		field.removeAttribute('aria-describedby');
 
 		// Remove error class to field
-		field.classList.remove(localSettings.fieldClass);
+		field.parentNode.classList.remove(localSettings.fieldClass);
 
 		// If the field is a radio button and part of a group, remove error from all and get the last item in the group
 		if (field.type === 'radio' && field.name) {
@@ -307,7 +340,7 @@
 			if (group.length > 0) {
 				for (var i = 0; i < group.length; i++) {
 					if (group[i].form !== field.form) continue; // Only check fields in current form
-					group[i].classList.remove(localSettings.fieldClass);
+					group[i].parentNode.classList.remove(localSettings.fieldClass);
 				}
 				field = group[group.length - 1];
 			}
@@ -448,7 +481,7 @@
 	validate.destroy = function () {
 
 		// If plugin isn't already initialized, stop
-		if ( !settings ) return;
+		if (!settings) return;
 
 		// Remove event listeners
 		document.removeEventListener('blur', blurHandler, false);
@@ -499,7 +532,19 @@
 	//
 	// Public APIs
 	//
+	var nwtcCustomErrors = function (field) {
+		var customErrorMessage = {
+			messageTypeMismatchEmailMyMail: 'Please do not use an NWTC MyMail account'
+		}
+		// If field is an email type 
+		if (field.type == 'email') {
+			// If email contains @mymail.nwtc show custom message
+			if (field.value.toLowerCase().indexOf("@mymail.nwtc") >= 0) {	
+				return customErrorMessage.messageTypeMismatchEmailMyMail;
+			}
+		}
+	};
 
 	return validate;
 
-});
+}));
