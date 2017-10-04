@@ -1,5 +1,5 @@
 /*!
- * validate v1.0.5: A lightweight form validation script that augments native HTML5 form validation elements and attributes.
+ * validate v1.1.0: A lightweight form validation script that augments native HTML5 form validation elements and attributes.
  * (c) 2017 Chris Ferdinandi
  * MIT License
  * http://github.com/cferdinandi/validate
@@ -65,7 +65,7 @@
 		messageValueMissing: 'Please fill out this field.',
 		messageValueMissingSelect: 'Please select a value.',
 		messageValueMissingSelectMulti: 'Please select at least one value.',
-		messageTypeMismatchEmail: 'Please enter an email address.:/',
+		messageTypeMismatchEmail: 'Please enter an email address.',
 		messageTypeMismatchURL: 'Please enter a URL.',
 		messageTooShort: 'Please lengthen this text to {minLength} characters or more. You are currently using {length} characters.',
 		messageTooLong: 'Please shorten this text to no more than {maxLength} characters. You are currently using {length} characters.',
@@ -187,12 +187,8 @@
 		var validity = field.validity;
 
 		// Custom MyMail Error
-
-
 		if (validity.valid && field.type == 'email') {
-			console.log('up top');
 			return nwtcCustomErrors(field);
-			console.log('up top also');
 		}
 
 		// If valid, return null
@@ -212,7 +208,7 @@
 		if (validity.typeMismatch) {
 
 			// Email
-			if (field.type === 'email') return localSettings.messageTypeMismatchEmail + ":(";
+			if (field.type === 'email') return localSettings.messageTypeMismatchEmail;
 
 			// URL
 			if (field.type === 'url') return localSettings.messageTypeMismatchURL;
@@ -543,8 +539,6 @@
 	//
 	// Public APIs
 	//
-
-	// function nwtcCustomErrors(field) {
 	var nwtcCustomErrors = function (field) {
 		var customErrorMessage = {
 			messageTypeMismatchEmailMyMail: 'Please do not use an NWTC MyMail account'
