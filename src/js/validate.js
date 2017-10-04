@@ -58,7 +58,7 @@
 		messageValueMissing: 'Please fill out this field.',
 		messageValueMissingSelect: 'Please select a value.',
 		messageValueMissingSelectMulti: 'Please select at least one value.',
-		messageTypeMismatchEmail: 'Please enter an email address.:/',
+		messageTypeMismatchEmail: 'Please enter an email address.',
 		messageTypeMismatchURL: 'Please enter a URL.',
 		messageTooShort: 'Please lengthen this text to {minLength} characters or more. You are currently using {length} characters.',
 		messageTooLong: 'Please shorten this text to no more than {maxLength} characters. You are currently using {length} characters.',
@@ -201,7 +201,7 @@
 		if (validity.typeMismatch) {
 
 			// Email
-			if (field.type === 'email') return localSettings.messageTypeMismatchEmail + ":(";
+			if (field.type === 'email') return localSettings.messageTypeMismatchEmail;
 
 			// URL
 			if (field.type === 'url') return localSettings.messageTypeMismatchURL;
